@@ -9,15 +9,15 @@
 #     http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 #     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'tianyancha'
+BOT_NAME = 'jingdong'
 
-SPIDER_MODULES = ['tianyancha.spiders']
-NEWSPIDER_MODULE = 'tianyancha.spiders'
+SPIDER_MODULES = ['jingdong.spiders']
+NEWSPIDER_MODULE = 'jingdong.spiders'
 
 DOWNLOADER_MIDDLEWARES = {
-    'tianyancha.middlewares.ProxyMiddleware': 100,#代理中间件
-    'tianyancha.middlewares.RotateUserAgentMiddleware': 200,#请求头中间件
-    'tianyancha.middlewares.JavaScriptMiddleware': 543,  # 键为中间件类的路径，值为中间件的顺序
+    'jingdong.middlewares.ProxyMiddleware': 100,#代理中间件
+    'jingdong.middlewares.RotateUserAgentMiddleware': 200,#请求头中间件
+    'jingdong.middlewares.JavaScriptMiddleware': 543,  # 键为中间件类的路径，值为中间件的顺序
     'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,  # 禁止内置的中间件
 }
 
