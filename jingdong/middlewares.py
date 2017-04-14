@@ -18,6 +18,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import codecs
 import os
+# from selenium.webdriver.common.action_chains import ActionChains
 
 class ProxyMiddleware(object):
     def __init__(self):
@@ -56,23 +57,36 @@ class ProxyMiddleware(object):
 
 class JavaScriptMiddleware(object):
     def process_request(self, request, spider):
-        print("PhantomJS is starting...")
-        driver = webdriver.PhantomJS() #指定使用的浏览器
-        driver.get(request.url)
-        if spider.name == "get_detail":
+        if spider.name == "jd_detail":
+            print("PhantomJS is starting...")
+            driver = webdriver.PhantomJS()  # 指定使用的浏览器
+            driver.get(request.url)
             # driver = webdriver.Firefox()
             time.sleep(1)
-            js = "var q=document.documentElement.scrollTop=10000"
+            js = "var q=document.documentElement.scrollTop=20000"
             driver.execute_script(js) #可执行js，模仿用户操作。此处为将页面拉至最底端。
             time.sleep(10)
+
+            data_opens = driver.find_elements_by_xpath('//a[@data-open]')
+            for data_open in data_opens:
+                print('展开更多前')
+                data_open.click
+                print('展开更多后')
+                # print('显示更多+++++++++++++++++++', data_open.str)
+            time.sleep(1)
+
             body = driver.page_source
             # print("访问"+request.url)
             return HtmlResponse(driver.current_url, body=body, encoding='utf-8', request=request)
         elif spider.name == 'get_company':
+            print("PhantomJS is starting...")
+            driver = webdriver.PhantomJS()  # 指定使用的浏览器
+            driver.get(request.url)
             try:
                 element = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '.col-xs-10.search_repadding2.f18')))
             except Exception as e:
-                print('没有找到元素或发生其他异常' + e)
+                print('没有找到元素或发生其他异常:' + e)
+                pass
             finally:
                 # print(driver.find_element_by_xpath('//a[@class="query_name search-new-color"]/@href').text())
                 # driver.close()

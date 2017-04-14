@@ -14,12 +14,21 @@ BOT_NAME = 'jingdong'
 SPIDER_MODULES = ['jingdong.spiders']
 NEWSPIDER_MODULE = 'jingdong.spiders'
 
+
+
 DOWNLOADER_MIDDLEWARES = {
-    'jingdong.middlewares.ProxyMiddleware': 100,#代理中间件
+    # 'jingdong.middlewares.ProxyMiddleware': 100,#代理中间件
     'jingdong.middlewares.RotateUserAgentMiddleware': 200,#请求头中间件
     'jingdong.middlewares.JavaScriptMiddleware': 543,  # 键为中间件类的路径，值为中间件的顺序
+    'scrapy_crawlera.CrawleraMiddleware': 600,  # crawlera代理用到
     'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,  # 禁止内置的中间件
+    # 'scrapy.contrib.downloadermiddleware.httpproxy.HttpProxyMiddleware': "http://" + CRAWLERA_USER + ":" + CRAWLERA_PASS + "@proxy.crawlera.com:8010/",
 }
+
+CRAWLERA_ENABLED = True
+CRAWLERA_APIKEY = '8293dc6c926d49c6bd3fe6f89549733c'
+# CRAWLERA_USER = '775618369@qq.com'
+# CRAWLERA_PASS = '3646287'
 
 #禁用cookies
 COOKIES_ENABLES=False
@@ -34,6 +43,7 @@ DUPEFILTER_CLASS = 'scrapy.dupefilters.BaseDupeFilter'
 # See also autothrottle settings and docs
 DOWNLOAD_DELAY = 2  # 间隔时间,两次下载的间隔
 RANDOMIZE_DOWNLOAD_DELAY = True  # 开启随机延迟
+# CRAWLERA_PRESERVE_DELAY = True
 
 USER_AGENT_CHOICES = [
     'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:41.0) Gecko/20100101 Firefox/41.0',
@@ -47,3 +57,4 @@ USER_AGENT_CHOICES = [
 ]
 
 LOG_STDOUT = True
+
