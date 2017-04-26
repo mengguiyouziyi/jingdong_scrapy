@@ -5,7 +5,7 @@ import codecs
 
 
 class GetDetailSpider(CrawlSpider):
-    name = 'jd_detail'
+    name = 'jd_m_detail'
     allowed_domains = ['jd.com']
     def start_requests(self):
         headers = {
@@ -18,7 +18,9 @@ class GetDetailSpider(CrawlSpider):
             'Upgrade-Insecure-Requests': '1',
             'Cache-Control': 'max-age=0',
         }
-        url = 'http://item.jd.com/11514245.html'
+        url = 'https://so.m.jd.com/category/all.html'
+        # https://so.m.jd.com/products/1713-100002751-3893.html
+        # https://item.m.jd.com/product/1049492452.html?jd_pop=cbca4b70-934b-40ea-9a70-977578673b60&abt=0
         yield scrapy.Request(url, headers=headers, callback=self.parse_item)
 
     def parse_item(self, response):

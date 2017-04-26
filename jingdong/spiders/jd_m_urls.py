@@ -5,7 +5,7 @@ import codecs
 
 
 class GetDetailSpider(CrawlSpider):
-    name = 'jd_detail'
+    name = 'jd_m_detail'
     allowed_domains = ['jd.com']
     def start_requests(self):
         headers = {

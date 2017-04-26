@@ -8,7 +8,8 @@
 import scrapy
 
 
-class JingdongItem(scrapy.Item):
+class JdBookUrlItem(scrapy.Item):
     # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+    category_url = scrapy.Field()
+    book_url = scrapy.Field()
+    pn_next_url = scrapy.Field()

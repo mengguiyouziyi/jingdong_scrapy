@@ -22,38 +22,17 @@ import os
 
 class ProxyMiddleware(object):
     def __init__(self):
-        self.proxys = []
-        ip_path = os.path.join(os.getcwd(), 'ip_list.txt')
-        with codecs.open(ip_path, 'r', 'utf-8') as f:
-            self.ip_list = f.readlines()
-            for ip in self.ip_list:
-                self.proxy = {'ip_port': str(ip).strip(),'user_pass':b''}
-                # print(self.proxy)
-                self.proxys.append(self.proxy)
+        # 代理服务器
+        self.proxyServer = "http://proxy.abuyun.com:9020"
+        # 代理隧道验证信息
+        self.proxyUser = "H12BV7ZU2B66580D"
+        self.proxyPass = "BF95270ABBEE5BF3"
+        # for Python3
+        self.proxyAuth = "Basic " + base64.urlsafe_b64encode(bytes((self.proxyUser + ":" + self.proxyPass), "ascii")).decode("utf8")
 
     def process_request(self, request, spider):
-        self.proxy = random.choice(self.proxys)
-        if self.proxy['user_pass'] is not None:
-            request.meta['proxy'] = "http://%s" % self.proxy['ip_port']
-            request.meta['proxy'] = "https://%s" % self.proxy['ip_port']
-            encoded_user_pass = base64.b64encode(self.proxy['user_pass'])
-            request.headers['Proxy-Authorization'] = b'Basic ' + encoded_user_pass
-            print("**************ProxyMiddleware have pass************" + self.proxy['ip_port'])
-        else:
-            print("**************ProxyMiddleware no pass************" + self.proxy['ip_port'])
-            request.meta['proxy'] = "http://%s" % self.proxy['ip_port']
-
-    def process_response(self, request, response, spider):
-        response_status = response.status
-        request_url = request.url
-        if response_status == 200:
-            print(self.proxy['ip_port'] + '：代理ip正常················')
-            return response
-        else:
-            print(self.proxy['ip_port'] + '：代理ip不能用了··············')
-            self.proxys.pop(self.proxy)
-            self.process_request(self, request.replace(url=request_url), spider)
-
+        request.meta["proxy"] = self.proxyServer
+        request.headers["Proxy-Authorization"] = self.proxyAuth
 
 class JavaScriptMiddleware(object):
     def process_request(self, request, spider):
@@ -121,49 +100,38 @@ class RotateUserAgentMiddleware(object):
 
 
 
-# class TianyanchaSpiderMiddleware(object):
-#     # Not all methods need to be defined. If a method is not defined,
-#     # scrapy acts as if the spider middleware does not modify the
-#     # passed objects.
+
+# class ProxyMiddleware(object):
+#     def __init__(self):
+#         self.proxys = []
+#         ip_path = os.path.join(os.getcwd(), 'ip_list.txt')
+#         with codecs.open(ip_path, 'r', 'utf-8') as f:
+#             self.ip_list = f.readlines()
+#             for ip in self.ip_list:
+#                 self.proxy = {'ip_port': str(ip).strip(),'user_pass':b''}
+#                 # print(self.proxy)
+#                 self.proxys.append(self.proxy)
 #
-#     @classmethod
-#     def from_crawler(cls, crawler):
-#         # This method is used by Scrapy to create your spiders.
-#         s = cls()
-#         crawler.signals.connect(s.spider_opened, signal=signals.spider_opened)
-#         return s
+#     def process_request(self, request, spider):
+#         self.proxy = random.choice(self.proxys)
+#         if self.proxy['user_pass'] is not None:
+#             request.meta['proxy'] = "http://%s" % self.proxy['ip_port']
+#             request.meta['proxy'] = "https://%s" % self.proxy['ip_port']
+#             encoded_user_pass = base64.b64encode(self.proxy['user_pass'])
+#             request.headers['Proxy-Authorization'] = b'Basic ' + encoded_user_pass
+#             print("**************ProxyMiddleware have pass************" + self.proxy['ip_port'])
+#         else:
+#             print("**************ProxyMiddleware no pass************" + self.proxy['ip_port'])
+#             request.meta['proxy'] = "http://%s" % self.proxy['ip_port']
 #
-#     def process_spider_input(response, spider):
-#         # Called for each response that goes through the spider
-#         # middleware and into the spider.
-#
-#         # Should return None or raise an exception.
-#         return None
-#
-#     def process_spider_output(response, result, spider):
-#         # Called with the results returned from the Spider, after
-#         # it has processed the response.
-#
-#         # Must return an iterable of Request, dict or Item objects.
-#         for i in result:
-#             yield i
-#
-#     def process_spider_exception(response, exception, spider):
-#         # Called when a spider or process_spider_input() method
-#         # (from other spider middleware) raises an exception.
-#
-#         # Should return either None or an iterable of Response, dict
-#         # or Item objects.
-#         pass
-#
-#     def process_start_requests(start_requests, spider):
-#         # Called with the start requests of the spider, and works
-#         # similarly to the process_spider_output() method, except
-#         # that it doesn’t have a response associated.
-#
-#         # Must return only requests (not items).
-#         for r in start_requests:
-#             yield r
-#
-#     def spider_opened(self, spider):
-#         spider.logger.info('Spider opened: %s' % spider.name)
+#     def process_response(self, request, response, spider):
+#         response_status = response.status
+#         request_url = request.url
+#         if response_status == 200:
+#             print(self.proxy['ip_port'] + '：代理ip正常················')
+#             return response
+#         else:
+#             print(self.proxy['ip_port'] + '：代理ip不能用了··············')
+#             self.proxys.pop(self.proxy)
+#             self.process_request(self, request.replace(url=request_url), spider)
+
