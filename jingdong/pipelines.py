@@ -7,7 +7,6 @@
 
 from scrapy.conf import settings
 import pymongo
-
 from scrapy.exceptions import DropItem
 
 class DuplicatesPipeline(object):

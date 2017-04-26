@@ -72,7 +72,7 @@ LOG_STDOUT = True
 LOG_LEVEL = 'INFO'
 
 ITEM_PIPELINES = {
-    'jingdong.pipelines.MongodbPipeline': 800,
+    # 'jingdong.pipelines.MongodbPipeline': 800,
     'jingdong.pipelines.DuplicatesPipeline': 700,
 
 }
