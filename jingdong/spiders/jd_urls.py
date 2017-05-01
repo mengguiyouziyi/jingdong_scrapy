@@ -23,11 +23,11 @@ class GetDetailSpider(CrawlSpider):
             category_url = self.st + url
             book_item['category_url'] = category_url
             # 将每个图书类别url发送请求
-            yield scrapy.Request(category_url, callback=self.parse_category)
+            yield scrapy.Request(url=category_url, meta={'item': book_item}, callback=self.parse_category)
             print('category_url~~' + category_url)
 
     def parse_category(self, response):
-        book_item = JdBookUrlItem()
+        book_item = response.meta['item']
         book_urls = response.xpath('//div[@class="gl-i-wrap j-sku-item"]/div[@class="p-img"]/a/@href').extract()
         with codecs.open('book_url.txt', 'a', 'utf-8') as file:
             for url in book_urls:

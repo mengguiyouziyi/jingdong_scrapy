@@ -17,7 +17,7 @@ NEWSPIDER_MODULE = 'jingdong.spiders'
 
 
 DOWNLOADER_MIDDLEWARES = {
-    'jingdong.middlewares.ProxyMiddleware': 100,#代理中间件
+    # 'jingdong.middlewares.ProxyMiddleware': 100,#代理中间件
     'jingdong.middlewares.RotateUserAgentMiddleware': 200,#请求头中间件
     # 'jingdong.middlewares.JavaScriptMiddleware': 543,  # 键为中间件类的路径，值为中间件的顺序
     # 'scrapy_crawlera.CrawleraMiddleware': 600,  # crawlera代理用到
@@ -72,7 +72,7 @@ LOG_STDOUT = True
 LOG_LEVEL = 'INFO'
 
 ITEM_PIPELINES = {
-    # 'jingdong.pipelines.MongodbPipeline': 800,
+    'jingdong.pipelines.MongodbPipeline': 800,
     'jingdong.pipelines.DuplicatesPipeline': 700,
 
 }
@@ -86,3 +86,6 @@ MONGODB_COLECNAME = 'url'
 #     {'ip_port': '92.222.146.67:9999','user_pass':''},
 #     {'ip_port': '111.13.7.122:80','user_pass':''},
 # ]
+
+DOWNLOAD_TIMEOUT = 240
+RETRY_TIMES = 10
